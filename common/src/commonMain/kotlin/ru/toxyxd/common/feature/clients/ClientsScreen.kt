@@ -51,8 +51,10 @@ internal fun ClientsScreen() {
                         modifier = Modifier
                             .nestedScroll(tas.nestedScrollConnection)
                     ) {
-                        items(clientsPage.clients.clients) { client ->
-                            Client(client = client)
+                        clientsPage.clients.clients?.let {
+                            items(it) { client ->
+                                Client(client = client)
+                            }
                         }
                         item {
                             Text(

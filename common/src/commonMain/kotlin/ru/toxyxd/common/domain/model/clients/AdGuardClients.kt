@@ -9,7 +9,7 @@ data class AdGuardClients(
     @SerialName("auto_clients")
     val autoClients: List<AutoClient>,
     @SerialName("clients")
-    val clients: List<Client>,
+    val clients: List<Client>? = null,
     @SerialName("supported_tags")
     val supportedTags: List<String>
 )
