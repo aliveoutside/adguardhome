@@ -16,8 +16,8 @@ class StorageRepositoryImpl: StorageRepository {
     override fun getFakeServers() = arrayListOf(
         Server(
             "test",
-            "192.168.2.1",
-            1337,
+            "cock.toxyxd.keenetic.link",
+            443,
             "toxyxd",
             "admin"
         )
