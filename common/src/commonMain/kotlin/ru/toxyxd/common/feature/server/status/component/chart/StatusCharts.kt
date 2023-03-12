@@ -15,6 +15,16 @@ import ru.toxyxd.common.ui.component.GrayLineSpacer
 fun StatusCharts(
     homePage: GetServerHome.ServerHomePage,
 ) {
+    BoxWithConstraints {
+        when {
+            maxWidth <= 800.dp -> ListCharts(homePage)
+            else -> TwoByTwoCharts(homePage)
+        }
+    }
+}
+
+@Composable
+private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -54,6 +64,56 @@ fun StatusCharts(
 }
 
 @Composable
+fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.weight(1f)
+        ) {
+            GrayLineSpacer()
+            StatusChart(
+                title = "Dns Queries",
+                total = homePage.stats.numDnsQueries,
+                color = Color.Blue,
+                chartData = homePage.stats.dnsQueries,
+                timeUnits = homePage.stats.timeUnits
+            )
+            GrayLineSpacer()
+            StatusChart(
+                title = "Blocked by filters",
+                total = homePage.stats.numBlockedFiltering,
+                color = Color.Red,
+                chartData = homePage.stats.blockedFiltering,
+                timeUnits = homePage.stats.timeUnits
+            )
+        }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier.weight(1f)
+        ) {
+            GrayLineSpacer()
+            StatusChart(
+                title = "Blocked by parental control",
+                total = homePage.stats.numReplacedParental,
+                color = Color.Green,
+                chartData = homePage.stats.replacedParental,
+                timeUnits = homePage.stats.timeUnits
+            )
+            GrayLineSpacer()
+            StatusChart(
+                title = "Blocked by safebrowsing",
+                total = homePage.stats.numReplacedSafebrowsing,
+                color = Color.Yellow.copy(green = 0.5f),
+                chartData = homePage.stats.replacedSafebrowsing,
+                timeUnits = homePage.stats.timeUnits
+            )
+        }
+    }
+}
+
+@Composable
 private fun StatusChart(
     title: String,
     total: Int? = null,
@@ -61,11 +121,11 @@ private fun StatusChart(
     chartData: List<Int>,
     timeUnits: String
 ) {
-    val shouldShowChart = total != null && total > 0
+    val shouldShowChart = true
     Column(
         modifier = Modifier.height(
             if (shouldShowChart) 200.dp else 20.dp
-        )
+        ).fillMaxWidth()
     ) {
         Row {
             Text(title, style = MaterialTheme.typography.bodyLarge)
