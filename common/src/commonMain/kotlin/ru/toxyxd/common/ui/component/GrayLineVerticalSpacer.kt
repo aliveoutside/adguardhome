@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun GrayLineSpacer() {
+fun GrayLineVerticalSpacer() {
     Spacer(modifier = Modifier
         .height(1.dp)
         .background(color = Color.DarkGray)

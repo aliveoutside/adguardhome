@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.toxyxd.common.domain.usecase.server.GetServerHome
-import ru.toxyxd.common.ui.component.GrayLineSpacer
+import ru.toxyxd.common.ui.component.GrayLineVerticalSpacer
 
 @Composable
 fun StatusCharts(
@@ -28,7 +28,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        GrayLineSpacer()
+        GrayLineVerticalSpacer()
         StatusChart(
             title = "Dns Queries",
             total = homePage.stats.numDnsQueries,
@@ -36,7 +36,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.dnsQueries,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineSpacer()
+        GrayLineVerticalSpacer()
         StatusChart(
             title = "Blocked by filters",
             total = homePage.stats.numBlockedFiltering,
@@ -44,7 +44,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.blockedFiltering,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineSpacer()
+        GrayLineVerticalSpacer()
         StatusChart(
             title = "Blocked by parental control",
             total = homePage.stats.numReplacedParental,
@@ -52,7 +52,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.replacedParental,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineSpacer()
+        GrayLineVerticalSpacer()
         StatusChart(
             title = "Blocked by safebrowsing",
             total = homePage.stats.numReplacedSafebrowsing,
@@ -72,7 +72,7 @@ fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            GrayLineSpacer()
+            GrayLineVerticalSpacer()
             StatusChart(
                 title = "Dns Queries",
                 total = homePage.stats.numDnsQueries,
@@ -80,7 +80,7 @@ fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
                 chartData = homePage.stats.dnsQueries,
                 timeUnits = homePage.stats.timeUnits
             )
-            GrayLineSpacer()
+            GrayLineVerticalSpacer()
             StatusChart(
                 title = "Blocked by filters",
                 total = homePage.stats.numBlockedFiltering,
@@ -93,7 +93,7 @@ fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            GrayLineSpacer()
+            GrayLineVerticalSpacer()
             StatusChart(
                 title = "Blocked by parental control",
                 total = homePage.stats.numReplacedParental,
@@ -101,7 +101,7 @@ fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
                 chartData = homePage.stats.replacedParental,
                 timeUnits = homePage.stats.timeUnits
             )
-            GrayLineSpacer()
+            GrayLineVerticalSpacer()
             StatusChart(
                 title = "Blocked by safebrowsing",
                 total = homePage.stats.numReplacedSafebrowsing,
