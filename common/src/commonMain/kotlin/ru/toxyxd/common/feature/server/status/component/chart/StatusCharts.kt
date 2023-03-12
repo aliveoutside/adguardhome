@@ -64,7 +64,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
 }
 
 @Composable
-fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
+private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
