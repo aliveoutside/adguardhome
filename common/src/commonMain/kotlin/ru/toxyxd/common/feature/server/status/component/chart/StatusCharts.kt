@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.toxyxd.common.domain.usecase.server.GetServerHome
+import ru.toxyxd.common.ui.WindowSizeClass
+import ru.toxyxd.common.ui.component.GrayLineHorizontalSpacer
 import ru.toxyxd.common.ui.component.GrayLineVerticalSpacer
 
 @Composable
@@ -16,9 +18,10 @@ fun StatusCharts(
     homePage: GetServerHome.ServerHomePage,
 ) {
     BoxWithConstraints {
-        when {
-            maxWidth <= 800.dp -> ListCharts(homePage)
-            else -> TwoByTwoCharts(homePage)
+        when (WindowSizeClass.fromWidth(maxWidth)) {
+            WindowSizeClass.Compact -> ListCharts(homePage)
+            WindowSizeClass.Medium -> TwoByTwoCharts(homePage)
+            WindowSizeClass.Expanded -> HorizontalListCharts(homePage)
         }
     }
 }
@@ -28,7 +31,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
     Column(
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-        GrayLineVerticalSpacer()
+        GrayLineHorizontalSpacer()
         StatusChart(
             title = "Dns Queries",
             total = homePage.stats.numDnsQueries,
@@ -36,7 +39,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.dnsQueries,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineVerticalSpacer()
+        GrayLineHorizontalSpacer()
         StatusChart(
             title = "Blocked by filters",
             total = homePage.stats.numBlockedFiltering,
@@ -44,7 +47,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.blockedFiltering,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineVerticalSpacer()
+        GrayLineHorizontalSpacer()
         StatusChart(
             title = "Blocked by parental control",
             total = homePage.stats.numReplacedParental,
@@ -52,7 +55,7 @@ private fun ListCharts(homePage: GetServerHome.ServerHomePage) {
             chartData = homePage.stats.replacedParental,
             timeUnits = homePage.stats.timeUnits
         )
-        GrayLineVerticalSpacer()
+        GrayLineHorizontalSpacer()
         StatusChart(
             title = "Blocked by safebrowsing",
             total = homePage.stats.numReplacedSafebrowsing,
@@ -72,7 +75,7 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            GrayLineVerticalSpacer()
+            GrayLineHorizontalSpacer()
             StatusChart(
                 title = "Dns Queries",
                 total = homePage.stats.numDnsQueries,
@@ -80,7 +83,7 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
                 chartData = homePage.stats.dnsQueries,
                 timeUnits = homePage.stats.timeUnits
             )
-            GrayLineVerticalSpacer()
+            GrayLineHorizontalSpacer()
             StatusChart(
                 title = "Blocked by filters",
                 total = homePage.stats.numBlockedFiltering,
@@ -93,7 +96,7 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             modifier = Modifier.weight(1f)
         ) {
-            GrayLineVerticalSpacer()
+            GrayLineHorizontalSpacer()
             StatusChart(
                 title = "Blocked by parental control",
                 total = homePage.stats.numReplacedParental,
@@ -101,7 +104,7 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
                 chartData = homePage.stats.replacedParental,
                 timeUnits = homePage.stats.timeUnits
             )
-            GrayLineVerticalSpacer()
+            GrayLineHorizontalSpacer()
             StatusChart(
                 title = "Blocked by safebrowsing",
                 total = homePage.stats.numReplacedSafebrowsing,
@@ -113,19 +116,61 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
     }
 }
 
+// TODO: Fix spacers
+@Composable
+private fun HorizontalListCharts(homePage: GetServerHome.ServerHomePage) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        GrayLineVerticalSpacer()
+        StatusChart(
+            title = "Dns Queries",
+            total = homePage.stats.numDnsQueries,
+            color = Color.Blue,
+            chartData = homePage.stats.dnsQueries,
+            timeUnits = homePage.stats.timeUnits,
+            modifier = Modifier.weight(1f)
+        )
+        GrayLineVerticalSpacer()
+        StatusChart(
+            title = "Blocked by filters",
+            total = homePage.stats.numBlockedFiltering,
+            color = Color.Red,
+            chartData = homePage.stats.blockedFiltering,
+            timeUnits = homePage.stats.timeUnits,
+            modifier = Modifier.weight(1f)
+        )
+        GrayLineVerticalSpacer()
+        StatusChart(
+            title = "Blocked by parental control",
+            total = homePage.stats.numReplacedParental,
+            color = Color.Green,
+            chartData = homePage.stats.replacedParental,
+            timeUnits = homePage.stats.timeUnits,
+            modifier = Modifier.weight(1f)
+        )
+        StatusChart(
+            title = "Blocked by safebrowsing",
+            total = homePage.stats.numReplacedSafebrowsing,
+            color = Color.Yellow.copy(green = 0.5f),
+            chartData = homePage.stats.replacedSafebrowsing,
+            timeUnits = homePage.stats.timeUnits,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
 @Composable
 private fun StatusChart(
     title: String,
     total: Int? = null,
     color: Color,
     chartData: List<Int>,
-    timeUnits: String
+    timeUnits: String,
+    modifier: Modifier = Modifier
 ) {
-    val shouldShowChart = true
     Column(
-        modifier = Modifier.height(
-            if (shouldShowChart) 200.dp else 20.dp
-        ).fillMaxWidth()
+        modifier = modifier.height(200.dp)
     ) {
         Row {
             Text(title, style = MaterialTheme.typography.bodyLarge)
@@ -134,16 +179,14 @@ private fun StatusChart(
                 Text(it.toString(), color = color, style = MaterialTheme.typography.bodyLarge)
             }
         }
-        if (shouldShowChart) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Box(contentAlignment = Alignment.BottomStart, modifier = Modifier.weight(1f)) {
-                LineChart(
-                    data = chartData,
-                    graphColor = color,
-                    timeUnits = timeUnits,
-                    modifier = Modifier.fillMaxSize()
-                )
-            }
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(contentAlignment = Alignment.BottomStart) {
+            LineChart(
+                data = chartData,
+                graphColor = color,
+                timeUnits = timeUnits,
+                modifier = Modifier.fillMaxSize()
+            )
         }
     }
 }
