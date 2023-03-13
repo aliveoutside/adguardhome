@@ -27,6 +27,7 @@ kotlin {
                 api(compose.material)
                 api(compose.material3)
                 api(compose.materialIconsExtended)
+                api(compose.preview)
 
                 api(libs.bundles.precompose)
                 implementation(libs.bundles.kotlinx)
