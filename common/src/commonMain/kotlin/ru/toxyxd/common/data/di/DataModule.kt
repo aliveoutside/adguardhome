@@ -51,5 +51,5 @@ private fun Module.repository() {
     single<SafeBrowsingRepository> { SafeBrowsingRepositoryImpl(get()) }
     single<SafeSearchRepository> {SafeSearchRepositoryImpl(get())}
     single<StatsRepository> { StatsRepositoryImpl(get()) }
-    single<StorageRepository> { StorageRepositoryImpl() }
+    single<StorageRepository> { StorageRepositoryImpl(get()) }
 }

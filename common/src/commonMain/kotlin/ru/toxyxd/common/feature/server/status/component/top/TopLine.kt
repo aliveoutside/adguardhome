@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun TopLine(
-    modifier: Modifier = Modifier,
     leftText: String,
     leftSubText: String? = null,
     rightText: String,
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier

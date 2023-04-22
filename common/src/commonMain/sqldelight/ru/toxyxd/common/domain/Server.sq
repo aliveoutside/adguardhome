@@ -1,0 +1,24 @@
+CREATE TABLE servers (
+    name TEXT NOT NULL,
+    host TEXT NOT NULL,
+    port INTEGER NOT NULL,
+    username TEXT NOT NULL,
+    password TEXT NOT NULL,
+    PRIMARY KEY (name)
+);
+
+selectAll:
+SELECT * FROM servers;
+
+insert:
+INSERT INTO servers (name, host, port, username, password)
+VALUES (?, ?, ?, ?, ?);
+
+update:
+UPDATE servers SET host = ?, port = ?, username = ?, password = ? WHERE name = ?;
+
+delete:
+DELETE FROM servers WHERE name = ?;
+
+deleteAll:
+DELETE FROM servers;

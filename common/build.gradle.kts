@@ -5,6 +5,7 @@ plugins {
     id("com.android.library")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.sqldelight)
 }
 
 group = "ru.toxyxd"
@@ -13,6 +14,7 @@ version = "1.0-SNAPSHOT"
 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 kotlin {
     android()
+    jvmToolchain(11)
     jvm("desktop") {
         compilations.all {
             kotlinOptions.jvmTarget = "11"
@@ -36,12 +38,15 @@ kotlin {
                 api(libs.koin.core)
 
                 implementation(libs.bundles.ktor)
+
+                implementation(libs.sqldelight.coroutines)
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation(libs.kotlinx.coroutines.android)
                 implementation(libs.koin.android)
+                implementation(libs.sqldelight.android)
                 api(libs.accompanistSystemUi)
             }
         }
@@ -49,6 +54,7 @@ kotlin {
         val desktopMain by getting {
             dependencies {
                 api(libs.kotlinx.coroutines.swing)
+                implementation(libs.sqldelight.jvm)
             }
         }
     }
@@ -58,6 +64,14 @@ dependencies {
     add("kspCommonMainMetadata", libs.compose.precompose.ksp)
     add("kspAndroid", libs.compose.precompose.ksp)
     add("kspDesktop", libs.compose.precompose.ksp)
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("ru.toxyxd")
+        }
+    }
 }
 
 android {

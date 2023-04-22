@@ -1,27 +1,32 @@
 package ru.toxyxd.common.data.repository
 
 import kotlinx.coroutines.flow.flow
+import ru.toxyxd.common.database.ServersListDatabase
 import ru.toxyxd.common.domain.model.Server
 import ru.toxyxd.common.domain.repository.StorageRepository
 
 
-class StorageRepositoryImpl: StorageRepository {
+class StorageRepositoryImpl(
+    private val database: ServersListDatabase
+): StorageRepository {
     //private var serversDelegate: ArrayList<Server>? by context.sharedPrefs("servers")
     private var selectedServerDelegate: Server? = null
 
-    override fun getServers(): ArrayList<Server> {
-        throw UnsupportedOperationException()
+    override fun getServers(): List<Server> {
+        return database.getServers()
     }
 
-    override fun getFakeServers() = arrayListOf(
-        Server(
-            "test",
-            "cock.toxyxd.keenetic.link",
-            443,
-            "toxyxd",
-            "admin"
-        )
-    )
+    override fun addServer(server: Server) {
+        database.insertServer(server)
+    }
+
+    override fun removeServer(server: Server) {
+        database.deleteServer(server)
+    }
+
+    override fun removeAllServers() {
+        database.deleteAll()
+    }
 
     override fun getSelectedServer() =
         flow {

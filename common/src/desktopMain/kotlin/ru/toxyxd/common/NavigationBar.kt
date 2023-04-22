@@ -21,7 +21,7 @@ actual fun NavigationBar(navigator: Navigator, content: @Composable () -> Unit) 
     val currentRoute = navigator.currentEntry.collectAsState(null).value?.route?.route
 
     Row {
-        if (currentRoute != "/home") {
+        if (currentRoute != null && !currentRoute.startsWith("/home")) {
             PermanentNavigationDrawer(
                 modifier = Modifier.width(200.dp),
                 drawerContent = {

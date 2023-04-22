@@ -32,12 +32,13 @@ compose.desktop {
         mainClass = "MainKt"
         nativeDistributions {
             targetFormats(TargetFormat.Deb, TargetFormat.AppImage)
+            modules("java.sql")
             packageName = "adguardhome"
             packageVersion = "1.0.0"
         }
         buildTypes.release {
             proguard {
-                configurationFiles.from("compose-desktop.pro")
+               // configurationFiles.from("compose-desktop.pro")
             }
         }
     }

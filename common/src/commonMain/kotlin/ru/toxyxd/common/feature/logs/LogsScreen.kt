@@ -118,7 +118,7 @@ internal fun LogsScreen() {
 }
 
 @Composable
-fun ScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun ScrollToTopButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
     FloatingActionButton(
         onClick = { onClick() },
         modifier = modifier

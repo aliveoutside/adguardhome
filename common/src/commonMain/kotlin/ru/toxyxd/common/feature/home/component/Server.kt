@@ -23,6 +23,7 @@ fun Server(
     address: String,
     name: String,
     onConnectClicked: () -> Unit = {},
+    onRemoveClicked: () -> Unit,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(targetValue = if (expandedState) 180f else 0f)
@@ -68,6 +69,14 @@ fun Server(
             ) {
                 Row {
                     Spacer(modifier = Modifier.weight(1f))
+                    Button(
+                        onClick = onRemoveClicked,
+                        modifier = Modifier
+                            .padding(8.dp)
+                            .align(Alignment.CenterVertically)
+                    ) {
+                        Text(text = "Remove")
+                    }
                     Button(
                         onClick = onConnectClicked,
                         modifier = Modifier

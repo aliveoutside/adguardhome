@@ -6,15 +6,17 @@ import ru.toxyxd.common.uikit.PageViewModel
 
 class HomeViewModel(
     private val repository: StorageRepository
-) : PageViewModel<List<Server>>() {
+) : PageViewModel<List<Server>?>() {
     init { reload() }
-    override suspend fun load(): List<Server> {
-        return repository.getFakeServers()
+    override suspend fun load(): List<Server>? {
+        return repository.getServers()
     }
 
-    fun setServer() {
-        repository.setSelectedServer(
-            repository.getFakeServers().first()
-        )
+    fun setServer(server: Server) {
+        repository.setSelectedServer(server)
+    }
+
+    fun removeServer(server: Server) {
+        repository.removeServer(server)
     }
 }

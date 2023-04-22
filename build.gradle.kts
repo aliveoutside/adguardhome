@@ -28,6 +28,7 @@ plugins {
 repositories {
     google()
 }
+
 versionCatalogUpdate {
     keep {
         // keep versions without any library or plugin reference

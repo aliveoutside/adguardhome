@@ -22,7 +22,7 @@ actual fun NavigationBar(
     val currentRoute = navigator.currentEntry.collectAsState(null).value?.route?.route
     Scaffold(
         bottomBar = {
-            if (currentRoute != "/home") {
+            if (currentRoute != null && !currentRoute.startsWith("/home")) {
                 NavigationBar {
                     NavigationBarItem(
                         icon = { Icon(Icons.Default.Info, "") },

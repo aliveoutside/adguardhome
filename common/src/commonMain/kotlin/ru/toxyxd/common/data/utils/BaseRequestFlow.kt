@@ -18,8 +18,12 @@ class BaseRequestFlow(
         storageRepository.getSelectedServer().map { server ->
             val requestBuilder: HttpRequestBuilder.() -> Unit = {
                 url {
-                    protocol = URLProtocol.HTTPS
-                    host = server.host
+                    protocol = if (server.host.startsWith("https://")) URLProtocol.HTTPS else URLProtocol.HTTP
+                    host = server.host.let {
+                        if (it.startsWith("http://") || it.startsWith("https://")) {
+                            it.substringAfter("://")
+                        } else it
+                    }
                     port = server.port
                     encodedPath = "/control/"
                 }
