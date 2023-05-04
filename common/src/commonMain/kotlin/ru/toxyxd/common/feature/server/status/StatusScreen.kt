@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.dp
@@ -14,6 +15,8 @@ import org.koin.core.parameter.parametersOf
 import ru.toxyxd.common.extension.getViewModel
 import ru.toxyxd.common.feature.server.status.component.card.StatusCardsGrid
 import ru.toxyxd.common.feature.server.status.component.chart.StatusCharts
+import ru.toxyxd.common.feature.server.status.component.top.TopCards
+import ru.toxyxd.common.ui.component.VerticalScrollbar
 import ru.toxyxd.common.uikit.PageLayout
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,9 +58,17 @@ internal fun StatusScreen() {
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     StatusCharts(
-                        homePage = homePage
+                        homePage
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    TopCards(
+                        homePage
                     )
                 }
+                VerticalScrollbar(
+                    modifier = Modifier.align(Alignment.CenterEnd).fillMaxHeight(),
+                    scrollState = scrollState,
+                )
             }
         }
     }

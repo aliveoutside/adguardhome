@@ -9,20 +9,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import ru.toxyxd.common.domain.usecase.server.GetServerHome
+import ru.toxyxd.common.ui.LocalSizeClassProvider
 import ru.toxyxd.common.ui.WindowSizeClass
 import ru.toxyxd.common.ui.component.GrayLineHorizontalSpacer
-import ru.toxyxd.common.ui.component.GrayLineVerticalSpacer
 
 @Composable
 fun StatusCharts(
     homePage: GetServerHome.ServerHomePage,
 ) {
-    BoxWithConstraints {
-        when (WindowSizeClass.fromWidth(maxWidth)) {
-            WindowSizeClass.Compact -> ListCharts(homePage)
-            WindowSizeClass.Medium -> TwoByTwoCharts(homePage)
-            WindowSizeClass.Expanded -> HorizontalListCharts(homePage)
-        }
+    when (LocalSizeClassProvider.current) {
+        WindowSizeClass.Compact -> ListCharts(homePage)
+        WindowSizeClass.Medium -> TwoByTwoCharts(homePage)
+        WindowSizeClass.Expanded -> HorizontalListCharts(homePage)
     }
 }
 
@@ -119,44 +117,44 @@ private fun TwoByTwoCharts(homePage: GetServerHome.ServerHomePage) {
 // TODO: Fix spacers
 @Composable
 private fun HorizontalListCharts(homePage: GetServerHome.ServerHomePage) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        GrayLineVerticalSpacer()
-        StatusChart(
-            title = "Dns Queries",
-            total = homePage.stats.numDnsQueries,
-            color = Color.Blue,
-            chartData = homePage.stats.dnsQueries,
-            timeUnits = homePage.stats.timeUnits,
-            modifier = Modifier.weight(1f)
-        )
-        GrayLineVerticalSpacer()
-        StatusChart(
-            title = "Blocked by filters",
-            total = homePage.stats.numBlockedFiltering,
-            color = Color.Red,
-            chartData = homePage.stats.blockedFiltering,
-            timeUnits = homePage.stats.timeUnits,
-            modifier = Modifier.weight(1f)
-        )
-        GrayLineVerticalSpacer()
-        StatusChart(
-            title = "Blocked by parental control",
-            total = homePage.stats.numReplacedParental,
-            color = Color.Green,
-            chartData = homePage.stats.replacedParental,
-            timeUnits = homePage.stats.timeUnits,
-            modifier = Modifier.weight(1f)
-        )
-        StatusChart(
-            title = "Blocked by safebrowsing",
-            total = homePage.stats.numReplacedSafebrowsing,
-            color = Color.Yellow.copy(green = 0.5f),
-            chartData = homePage.stats.replacedSafebrowsing,
-            timeUnits = homePage.stats.timeUnits,
-            modifier = Modifier.weight(1f)
-        )
+    Column {
+        GrayLineHorizontalSpacer()
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            StatusChart(
+                title = "Dns Queries",
+                total = homePage.stats.numDnsQueries,
+                color = Color.Blue,
+                chartData = homePage.stats.dnsQueries,
+                timeUnits = homePage.stats.timeUnits,
+                modifier = Modifier.weight(1f)
+            )
+            StatusChart(
+                title = "Blocked by filters",
+                total = homePage.stats.numBlockedFiltering,
+                color = Color.Red,
+                chartData = homePage.stats.blockedFiltering,
+                timeUnits = homePage.stats.timeUnits,
+                modifier = Modifier.weight(1f)
+            )
+            StatusChart(
+                title = "Blocked by parental control",
+                total = homePage.stats.numReplacedParental,
+                color = Color.Green,
+                chartData = homePage.stats.replacedParental,
+                timeUnits = homePage.stats.timeUnits,
+                modifier = Modifier.weight(1f)
+            )
+            StatusChart(
+                title = "Blocked by safebrowsing",
+                total = homePage.stats.numReplacedSafebrowsing,
+                color = Color.Yellow.copy(green = 0.5f),
+                chartData = homePage.stats.replacedSafebrowsing,
+                timeUnits = homePage.stats.timeUnits,
+                modifier = Modifier.weight(1f)
+            )
+        }
     }
 }
 

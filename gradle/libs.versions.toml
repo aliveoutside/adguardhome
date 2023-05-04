@@ -2,7 +2,6 @@
 agp = "7.4.0"
 # @pin
 androidx-activity = "1.7.0-rc01"
-app-cash-paging = "3.2.0-alpha04-0.2.0"
 koin = "3.3.3"
 koin-annotations = "1.0.3.11"
 # @pin
